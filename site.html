@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Онлайн-кинотеатр | Фильм "Поезд"</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #f0f0f0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #333;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #e50914;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #e50914;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .video-section {
+            position: relative;
+        }
+
+        .video-container {
+            width: 100%;
+            background-color: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* Соотношение сторон 16:9 */
+            background-color: #111;
+            position: relative;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .video-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .video-controls button {
+            background-color: #e50914;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .video-controls button:hover {
+            background-color: #ff0a16;
+        }
+
+        .video-info {
+            display: flex;
+            justify-content: space-between;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .poster-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .poster-container {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .poster-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            min-height: 500px;
+            object-fit: cover;
+        }
+
+        .movie-info {
+            background-color: #1a1a1a;
+            padding: 25px;
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .movie-info h2 {
+            color: #e50914;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        .movie-info p {
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+
+        .movie-details {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .movie-details div {
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+
+        .movie-details span {
+            color: #aaa;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stars {
+            color: #ffc107;
+            margin-right: 10px;
+        }
+
+        .rating-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .actors {
+            margin-top: 20px;
+        }
+
+        .actors h3 {
+            margin-bottom: 10px;
+            color: #f0f0f0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid #333;
+            margin-top: 40px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .social-icons a {
+            color: #aaa;
+            font-size: 20px;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #e50914;
+        }
+
+        .fullscreen-btn {
+            background-color: transparent;
+            border: 1px solid #e50914;
+            color: #e50914;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .fullscreen-btn:hover {
+            background-color: #e50914;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="#" class="logo">ONLINE CINEMA</a>
+            <nav>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> Главная</a></li>
+                    <li><a href="#"><i class="fas fa-film"></i> Фильмы</a></li>
+                    <li><a href="#"><i class="fas fa-user"></i> Мой профиль</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="main-content">
+            <div class="video-section">
+                <div class="video-container">
+                    <div class="video-placeholder">
+                        <video id="movieVideo" controls poster="https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                            <source src="https://raw.githubusercontent.com/baksenov941-hue/vido/4f538be3c092c15b0ac330eb06f6988174518966/Untitled-_2_.mp4" type="video/mp4">
+                            Ваш браузер не поддерживает видео тег.
+                        </video>
+                    </div>
+                </div>
+                
+                <div class="video-controls">
+                    <div>
+                        <button id="playPauseBtn"><i class="fas fa-play"></i> Воспроизвести</button>
+                        <button class="fullscreen-btn" id="fullscreenBtn"><i class="fas fa-expand"></i> Полный экран</button>
+                    </div>
+                    <div class="video-info">
+                        <div>Длительность: 2ч 18мин</div>
+                        <div>Качество: Full HD</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="poster-section">
+                <div class="poster-container">
+                    <!-- 
+                        ==============================
+                        ПОСТЕР ФИЛЬМА
+                        Вставьте свой постер здесь:
+                        ==============================
+                    -->
+                    <img src="./img/img.jpg" alt="Постер фильма 'Поезд'" class="poster-img" id="posterImage">
+                </div>
+                
+                <div class="movie-info">
+                    <h2>ПОЕЗД</h2>
+                    <div class="rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="rating-value">8.2/10</div>
+                    </div>
+                    
+                    <p>Захватывающий триллер о группе незнакомцев, оказавшихся в поезде, который несется к неизвестной цели. По мере движения выясняется, что у каждого пассажира есть свои тайны, а само путешествие оказывается не случайным.</p>
+                    
+                    <div class="movie-details">
+                        <div><strong>Год выпуска:</strong> <span>2023</span></div>
+                        <div><strong>Страна:</strong> <span>Россия, США</span></div>
+                        <div><strong>Жанр:</strong> <span>Триллер, детектив</span></div>
+                        <div><strong>Режиссер:</strong> <span>Алексей Петров</span></div>
+                        <div><strong>Возрастное ограничение:</strong> <span>18+</span></div>
+                    </div>
+                    
+                    <div class="actors">
+                        <h3>В главных ролях:</h3>
+                        <p>Иван Степанов, Эмили Уотсон, Сергей Гармаш, Ольга Сутулова, Майкл Б. Джордан</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-vk"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>© 2023 Онлайн-кинотеатр. Все права защищены.</p>
+            <p>Фильм "Поезд" предоставлен для просмотра исключительно в личных целях.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Элементы управления видео
+        const movieVideo = document.getElementById('movieVideo');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        
+        // Обработчик для кнопки воспроизведения/паузы
+        playPauseBtn.addEventListener('click', function() {
+            if (movieVideo.paused) {
+                movieVideo.play();
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i> Пауза';
+            } else {
+                movieVideo.pause();
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i> Воспроизвести';
+            }
+        });
+        
+        // Обработчик для кнопки полного экрана
+        fullscreenBtn.addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+                if (movieVideo.requestFullscreen) {
+                    movieVideo.requestFullscreen();
+                } else if (movieVideo.webkitRequestFullscreen) {
+                    movieVideo.webkitRequestFullscreen();
+                } else if (movieVideo.msRequestFullscreen) {
+                    movieVideo.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        });
+        
+        // Обновление кнопки при изменении состояния воспроизведения
+        movieVideo.addEventListener('play', function() {
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i> Пауза';
+        });
+        
+        movieVideo.addEventListener('pause', function() {
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i> Воспроизвести';
+        });
+    </script>
+</body>
+</html>
